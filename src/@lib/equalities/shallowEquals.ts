@@ -7,12 +7,14 @@ export function shallowEquals<T>(objA: T, objB: T): boolean {
     return true;
   }
   if (Array.isArray(objA) && Array.isArray(objB)) {
+    // 배열에 대한 얕은 비교
     if (objA.length !== objB.length) {
       return false;
     }
-    return objA.every((value, key) => objB[key] === value); // 배열에 대한 얕은 비교
+    return objA.every((value, key) => objB[key] === value);
   }
   if (isObject(objA) && isObject(objB)) {
+    //객체의 경우 entries로 [key, value] 구조로 만들어서
     const entriesA = Object.entries(objA);
     const entriesB = Object.entries(objB);
 

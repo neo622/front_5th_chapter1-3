@@ -9,21 +9,21 @@ export function deepEquals<T>(objA: T, objB: T): boolean {
     return true;
   }
   if (Array.isArray(objA) && Array.isArray(objB)) {
+    // 배열에 대한 깊은 비교
     if (objA.length !== objB.length) {
       return false;
     }
-    return objA.every((value, key) => objB[key] === value); // 배열에 대한 얕은 비교
+    return objA.every((value, key) => deepEquals(value, objB[key]));
   }
   if (isObject(objA) && isObject(objB)) {
-    const entriesA = Object.entries(objA);
-    const entriesB = Object.entries(objB);
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
 
-    return (
-      entriesA.length === entriesB.length &&
-      entriesA.every(([key, value]) => {
-        return objB[key] === value;
-      })
-    );
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    return keysA.every((key) => deepEquals(objA[key], objB[key]));
   }
   return false;
 }
