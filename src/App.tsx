@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { ItemList } from "./components/ItemList";
 import { ComplexForm } from "./components/ComplexForm";
 import { NotificationSystem } from "./components/NotificationSystem";
+import { useMemo } from "./@lib";
 
 // 메인 App 컴포넌트
 const App: React.FC = () => {
@@ -49,16 +50,20 @@ const App: React.FC = () => {
     );
   };
 
-  const contextValue: AppContextType = {
-    theme,
-    toggleTheme,
-    user,
-    login,
-    logout,
-    notifications,
-    addNotification,
-    removeNotification,
-  };
+  // AppContext의 value 객체를 useMemo로 고정하기
+  const contextValue: AppContextType = useMemo(
+    () => ({
+      theme,
+      toggleTheme,
+      user,
+      login,
+      logout,
+      notifications,
+      addNotification,
+      removeNotification,
+    }),
+    [theme, toggleTheme, user, login, logout, notifications]
+  );
 
   return (
     <AppContext.Provider value={contextValue}>
