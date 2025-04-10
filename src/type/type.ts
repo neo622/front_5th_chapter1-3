@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Item {
   id: number;
   name: string;
@@ -50,3 +52,7 @@ export type ItemListProps = {
   items: Item[];
   onAddItemsClick: () => void;
 };
+
+export interface ContextProps {
+  children: ReactNode;
+}

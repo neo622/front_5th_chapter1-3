@@ -12,11 +12,10 @@ import { ItemList } from "./components/ItemList";
 import { ComplexForm } from "./components/ComplexForm";
 import { NotificationSystem } from "./components/NotificationSystem";
 import { useCallback, useMemo } from "./@lib";
-import { ThemeContext } from "./context/ThemeContext";
+import { ThemeContextProvider } from "./context/ThemeContext.tsx";
 import { AuthContext } from "./context/AuthContext";
 import { Wrapper } from "./components/Wrapper";
-import { NotificationContext } from "./context/NotificationContext";
-
+import { NotificationContext } from "./context/NotificationContext.ts";
 // 메인 App 컴포넌트
 const App: React.FC = () => {
   const [theme, setTheme] = useState("light");
@@ -87,7 +86,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <ThemeContext.Provider value={themeCtxValue}>
+    <ThemeContextProvider>
       <AuthContext.Provider value={authCtxValue}>
         <NotificationContext.Provider value={notificationCtxValue}>
           <Wrapper>
@@ -106,7 +105,7 @@ const App: React.FC = () => {
           </Wrapper>
         </NotificationContext.Provider>
       </AuthContext.Provider>
-    </ThemeContext.Provider>
+    </ThemeContextProvider>
   );
 };
 
