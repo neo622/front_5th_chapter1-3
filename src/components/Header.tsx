@@ -1,11 +1,13 @@
 import React from "react";
-import { renderLog, AppContext } from "../utils";
-import { useAppContext } from "../@lib/hooks/useAppContext";
+import { renderLog } from "../utils";
 import { memo } from "../@lib";
+import { useThemeContext } from "../@lib/hooks/useThemeContext";
+import { useAuthContext } from "../@lib/hooks/useAuthContext";
 
 // Header 컴포넌트
 export const Header: React.FC = memo(() => {
-  const { theme, toggleTheme, user, login, logout } = useAppContext(AppContext);
+  const { theme, toggleTheme } = useThemeContext();
+  const { user, login, logout } = useAuthContext();
 
   renderLog("Header rendered");
 

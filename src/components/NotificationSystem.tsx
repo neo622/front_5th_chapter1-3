@@ -1,11 +1,12 @@
 import React from "react";
-import { renderLog, AppContext } from "../utils";
-import { useAppContext } from "../@lib/hooks/useAppContext";
+import { renderLog } from "../utils";
+import { memo } from "../@lib";
+import { useNotificationContext } from "../@lib/hooks/useNotificationContext";
 
 // NotificationSystem 컴포넌트
-export const NotificationSystem: React.FC = () => {
+export const NotificationSystem: React.FC = memo(() => {
   renderLog("NotificationSystem rendered");
-  const { notifications, removeNotification } = useAppContext(AppContext);
+  const { notifications, removeNotification } = useNotificationContext();
 
   return (
     <div className="fixed bottom-4 right-4 space-y-2">
@@ -33,4 +34,4 @@ export const NotificationSystem: React.FC = () => {
       ))}
     </div>
   );
-};
+});

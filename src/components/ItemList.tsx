@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { renderLog, AppContext } from "../utils";
+import { renderLog } from "../utils";
 import { ItemListProps } from "../type/type";
-import { useAppContext } from "../@lib/hooks/useAppContext";
 import { memo } from "../@lib";
+import { useThemeContext } from "../@lib/hooks/useThemeContext";
 // ItemList 컴포넌트
 export const ItemList: React.FC<ItemListProps> = memo(
   ({ items, onAddItemsClick }) => {
-    const { theme } = useAppContext(AppContext);
+    const { theme } = useThemeContext();
 
     renderLog("ItemList rendered");
     const [filter, setFilter] = useState("");

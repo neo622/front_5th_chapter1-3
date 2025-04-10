@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { generateItems, AppContext } from "./utils";
-import { User, Notification, AppContextType } from "./type/type";
+import { generateItems, renderLog } from "./utils";
+import {
+  User,
+  Notification,
+  AuthContextType,
+  NotificationContextType,
+  ThemeContextType,
+} from "./type/type";
 import { Header } from "./components/Header";
 import { ItemList } from "./components/ItemList";
 import { ComplexForm } from "./components/ComplexForm";
 import { NotificationSystem } from "./components/NotificationSystem";
-import { useMemo } from "./@lib";
+import { useCallback, useMemo } from "./@lib";
+import { ThemeContext } from "./context/ThemeContext";
+import { AuthContext } from "./context/AuthContext";
+import { Wrapper } from "./components/Wrapper";
+import { NotificationContext } from "./context/NotificationContext";
 
 // 메인 App 컴포넌트
 const App: React.FC = () => {
@@ -14,9 +24,9 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  }, [setTheme]);
 
   const addItems = () => {
     setItems((prevItems) => [
@@ -50,40 +60,53 @@ const App: React.FC = () => {
     );
   };
 
-  // AppContext의 value 객체를 useMemo로 고정하기
-  const contextValue: AppContextType = useMemo(
+  const themeCtxValue: ThemeContextType = useMemo(
     () => ({
       theme,
       toggleTheme,
+    }),
+    [theme, toggleTheme]
+  );
+
+  const authCtxValue: AuthContextType = useMemo(
+    () => ({
       user,
       login,
       logout,
+    }),
+    [user, login, logout]
+  );
+
+  const notificationCtxValue: NotificationContextType = useMemo(
+    () => ({
       notifications,
       addNotification,
       removeNotification,
     }),
-    [theme, toggleTheme, user, login, logout, notifications]
+    [notifications, addNotification, removeNotification]
   );
 
   return (
-    <AppContext.Provider value={contextValue}>
-      <div
-        className={`min-h-screen ${theme === "light" ? "bg-gray-100" : "bg-gray-900 text-white"}`}
-      >
-        <Header />
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/2 md:pr-4">
-              <ItemList items={items} onAddItemsClick={addItems} />
+    <ThemeContext.Provider value={themeCtxValue}>
+      <AuthContext.Provider value={authCtxValue}>
+        <NotificationContext.Provider value={notificationCtxValue}>
+          <Wrapper>
+            <Header />
+            <div className="container mx-auto px-4 py-8">
+              <div className="flex flex-col md:flex-row">
+                <div className="w-full md:w-1/2 md:pr-4">
+                  <ItemList items={items} onAddItemsClick={addItems} />
+                </div>
+                <div className="w-full md:w-1/2 md:pl-4">
+                  <ComplexForm />
+                </div>
+              </div>
             </div>
-            <div className="w-full md:w-1/2 md:pl-4">
-              <ComplexForm />
-            </div>
-          </div>
-        </div>
-        <NotificationSystem />
-      </div>
-    </AppContext.Provider>
+            <NotificationSystem />
+          </Wrapper>
+        </NotificationContext.Provider>
+      </AuthContext.Provider>
+    </ThemeContext.Provider>
   );
 };
 

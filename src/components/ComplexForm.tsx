@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { renderLog, AppContext } from "../utils";
-import { useAppContext } from "../@lib/hooks/useAppContext";
+import { renderLog } from "../utils";
+import { memo } from "../@lib";
+import { useNotificationContext } from "../@lib/hooks/useNotificationContext";
 
 // ComplexForm 컴포넌트
-export const ComplexForm: React.FC = () => {
-  const { addNotification } = useAppContext(AppContext);
+export const ComplexForm: React.FC = memo(() => {
+  const { addNotification } = useNotificationContext();
 
   renderLog("ComplexForm rendered");
   const [formData, setFormData] = useState({
@@ -86,4 +87,4 @@ export const ComplexForm: React.FC = () => {
       </form>
     </div>
   );
-};
+});
