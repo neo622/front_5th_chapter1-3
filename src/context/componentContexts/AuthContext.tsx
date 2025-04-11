@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
-import { useCallback, useMemo } from "../@lib";
-import { AuthContextType, ContextProps, User } from "../type/type";
-import { useNotificationContext } from "../@lib/hooks/useNotificationContext";
+import { useCallback, useMemo } from "../../@lib";
+import { AuthContextType, ContextProps, User } from "../../type/type";
+import { useNotificationContext } from "../../@lib/hooks/useNotificationContext";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined

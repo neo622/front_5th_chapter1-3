@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
-import { useCallback, useMemo } from "../@lib";
-import { ThemeContextType, ContextProps } from "../type/type";
+import { useCallback, useMemo } from "../../@lib";
+import { ThemeContextType, ContextProps } from "../../type/type";
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined

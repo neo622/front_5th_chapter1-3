@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
-import { useCallback, useMemo } from "../@lib";
+import { useCallback, useMemo } from "../../@lib";
 import {
   NotificationContextType,
   ContextProps,
   Notification,
-} from "../type/type";
+} from "../../type/type";
 
 export const NotificationContext = createContext<
   NotificationContextType | undefined
